@@ -11,6 +11,7 @@ interface Directors extends Teacher {
   numberOfReports: number;
 }
 
+
 const teacher: Teacher = {
   firstName: 'John',
   lastName: 'Doe',
@@ -77,4 +78,46 @@ const directorNameContainer = document.getElementById('director-name');
 
 if (directorNameContainer) {
   directorNameContainer.textContent = directorName;
+}
+
+
+// Interface for StudentClass constructor
+interface StudentClassConstructor {
+  new (firstName: string, lastName: string): StudentClassInterface;
+}
+
+// Interface for StudentClass methods
+interface StudentClassInterface {
+  workOnHomework(): string;
+  displayName(): string;
+}
+
+// StudentClass implementation
+class StudentClass implements StudentClassInterface {
+  firstName: string;
+  lastName: string;
+
+  constructor(firstName: string, lastName: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  workOnHomework(): string {
+    return 'Currently working';
+  }
+
+  displayName(): string {
+    return this.firstName;
+  }
+}
+
+// Creating a new instance of StudentClass
+const studentInstance = new StudentClass('Alice', 'Johnson');
+
+// Render student name
+const studentName = studentInstance.displayName();
+const studentNameContainer = document.getElementById('student-name');
+
+if (studentNameContainer) {
+  studentNameContainer.textContent = studentName;
 }
