@@ -7,6 +7,10 @@ interface Teacher {
   [key: string]: any;
 }
 
+interface Directors extends Teacher {
+  numberOfReports: number;
+}
+
 const teacher: Teacher = {
   firstName: 'John',
   lastName: 'Doe',
@@ -15,24 +19,62 @@ const teacher: Teacher = {
   contract: false,
 };
 
-// Function to render teacher details in the HTML container
-function renderTeacherDetails(teacher: Teacher) {
-  const container = document.getElementById('teacher-details');
+const director1: Directors = {
+  firstName: 'Jane',
+  lastName: 'Smith',
+  fullTimeEmployee: true,
+  location: 'New York',
+  numberOfReports: 17,
+};
+
+// Function to render object details in the HTML container
+function renderDetails(obj: any, containerId: string) {
+  const container = document.getElementById(containerId);
 
   if (container) {
-      container.innerHTML = `
-          <h2>Teacher Details:</h2>
-          <p>First Name: ${teacher.firstName}</p>
-          <p>Last Name: ${teacher.lastName}</p>
-          <p>Full-Time Employee: ${teacher.fullTimeEmployee}</p>
-          <p>Years of Experience: ${teacher.yearsOfExperience ?? 'Not specified'}</p>
-          <p>Location: ${teacher.location}</p>
-          ${Object.keys(teacher)
-              .filter(key => !['firstName', 'lastName', 'fullTimeEmployee', 'yearsOfExperience', 'location'].includes(key))
-              .map(key => `<p>${key}: ${teacher[key]}</p>`)
-              .join('')}
-      `;
+    container.innerHTML = `
+      <h2>Details:</h2>
+      ${Object.entries(obj)
+        .map(([key, value]) => {
+          if (typeof value === 'boolean') {
+            return `<p>${key}: ${value ? 'Yes' : 'No'}</p>`;
+          }
+          return `<p>${key}: ${value ?? 'Not specified'}</p>`;
+        })
+        .join('')}
+    `;
   }
 }
 
-renderTeacherDetails(teacher);
+// Call the renderDetails function with the teacher object and container ID
+renderDetails(teacher, 'teacher-details');
+
+// Call the renderDetails function with the director1 object and container ID
+renderDetails(director1, 'director-details');
+
+// Function to print teacher name
+function printTeacher(firstName: string, lastName: string): string {
+  const firstLetter = firstName.charAt(0).toUpperCase();
+  const fullName = `${firstLetter}. ${lastName}`;
+  return fullName;
+}
+
+// Call the printTeacher function with teacher's first and last name
+const teacherName = printTeacher(teacher.firstName, teacher.lastName);
+
+// Call the printTeacher function with director's first and last name
+const directorName = printTeacher(director1.firstName, director1.lastName);
+
+// Render teacher name
+const teacherNameContainer = document.getElementById('teacher-name');
+
+if (teacherNameContainer) {
+  teacherNameContainer.textContent = teacherName;
+}
+
+// Render director name
+const directorNameContainer = document.getElementById('director-name');
+
+if (directorNameContainer) {
+  directorNameContainer.textContent = directorName;
+}
