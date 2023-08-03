@@ -160,3 +160,43 @@ interface StudentClass {
       studentNameContainer.textContent = studentName;
     }
   });
+
+  // Function to check if an employee is a Director
+function isDirector(employee: Teacher | Director): employee is Director {
+    return 'numberOfReports' in employee;
+  }
+  
+  // Function to execute work based on employee type
+  function executeWork(employee: Teacher | Director): string {
+    if (isDirector(employee)) {
+      return employee.workDirectorTasks();
+    } else {
+      return employee.workTeacherTasks();
+    }
+  }
+  
+  // Usage examples
+  const employee1 = createEmployee(200) as Teacher | Director;
+  const employee2 = createEmployee(1000) as Teacher | Director;
+  
+  console.log(executeWork(employee1)); // Should return "Getting to work"
+  console.log(executeWork(employee2)); // Should return "Getting to director tasks"
+
+  // Define a string literal type for Subjects
+type Subjects = 'Math' | 'History';
+
+// Function to teach the class based on the subject
+function teachClass(todayClass: Subjects): string {
+  if (todayClass === 'Math') {
+    return 'Teaching Math';
+  } else if (todayClass === 'History') {
+    return 'Teaching History';
+  } else {
+    return 'Invalid subject';
+  }
+}
+
+// Usage examples
+console.log(teachClass('Math')); // Should return "Teaching Math"
+console.log(teachClass('History')); // Should return "Teaching History"
+  
