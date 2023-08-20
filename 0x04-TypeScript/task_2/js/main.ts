@@ -199,4 +199,7 @@ function teachClass(todayClass: Subjects): string {
 // Usage examples
 console.log(teachClass('Math')); // Should return "Teaching Math"
 console.log(teachClass('History')); // Should return "Teaching History"
+
+
+
   
